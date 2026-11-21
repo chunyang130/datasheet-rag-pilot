@@ -25,6 +25,7 @@ import os
 import re
 import statistics
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -57,12 +58,24 @@ def _post(url, payload, headers, timeout=300):
         return json.loads(r.read())
 
 
+NO_TEMPERATURE = set()   # 拒絕 temperature 參數的模型，第一次被拒後記住
+
+
 def call_claude(prompt, model):
-    data = _post("https://api.anthropic.com/v1/messages",
-                 {"model": model, "max_tokens": 800, "temperature": 0,
-                  "messages": [{"role": "user", "content": prompt}]},
-                 {"x-api-key": os.environ["ANTHROPIC_API_KEY"],
-                  "anthropic-version": "2023-06-01"})
+    payload = {"model": model, "max_tokens": 800,
+               "messages": [{"role": "user", "content": prompt}]}
+    if model not in NO_TEMPERATURE:
+        payload["temperature"] = 0
+    headers = {"x-api-key": os.environ["ANTHROPIC_API_KEY"],
+               "anthropic-version": "2023-06-01"}
+    try:
+        data = _post("https://api.anthropic.com/v1/messages", payload, headers)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", "replace")[:300]
+        if e.code == 400 and "temperature" in body and "temperature" in payload:
+            NO_TEMPERATURE.add(model)       # 新模型可能不接受 temperature，拿掉後重試一次
+            return call_claude(prompt, model)
+        raise RuntimeError(f"HTTP {e.code}：{body}") from None
     text = "".join(b.get("text", "") for b in data["content"])
     u = data.get("usage", {})
     return text, u.get("input_tokens", 0), u.get("output_tokens", 0)
