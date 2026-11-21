@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "description": "地端 RAG 技術文件問答前導實驗題組（30 題）",
+    "documents": {
+      "esp32": "ESP32 系列芯片技術規格書 v5.3（Espressif，簡體中文，74 頁）",
+      "wroom": "ESP32-WROOM-32E & WROOM-32UE 技術規格書 v2.1（Espressif，簡體中文，52 頁）",
+      "lm317": "LM317 3-Pin Adjustable Regulator, SLVS044Z, Rev. April 2025（TI，英文，45 頁）"
+    },
+    "types": {
+      "lookup": "查表數值題：答案是表格或條列中的單一數值",
+      "caveat": "但書題：答案有條件或版本差異，漏講條件即算錯",
+      "confusion": "晶片與模組混淆題：兩份文件數值不同，必須分清楚",
+      "calc": "計算題：需要套用文件中的公式",
+      "refuse": "拒答題：文件中沒有答案，正確行為是回答找不到"
+    },
+    "note": "page 為 PDF 頁碼。所有 LM317 題目以中文提問，皆屬跨語言題。"
+  },
+  "questions": [
+    {"id": "q01", "type": "lookup", "doc": "lm317", "page": 1, "question": "LM317 的輸出電壓可調範圍是多少？", "answer": "1.25 V 到 37 V", "keywords": ["1.25", "37"]},
+    {"id": "q02", "type": "lookup", "doc": "lm317", "page": 8, "question": "LM317 的參考電壓典型值是多少？", "answer": "典型值 1.25 V（在規定條件下最小 1.2 V、最大 1.3 V）", "keywords": ["1.25"]},
+    {"id": "q03", "type": "lookup", "doc": "lm317", "page": 8, "question": "LM317 ADJUST 腳的電流典型值和最大值是多少？", "answer": "典型 50 μA，最大 100 μA", "keywords": ["50", "100"]},
+    {"id": "q04", "type": "lookup", "doc": "lm317", "page": 6, "question": "LM317 建議的輸入輸出電壓差範圍是多少？", "answer": "3 V 到 40 V", "keywords": ["3", "40"]},
+    {"id": "q05", "type": "lookup", "doc": "lm317", "page": 6, "question": "LM317 的儲存溫度範圍是多少？", "answer": "−65 °C 到 150 °C", "keywords": ["65", "150"]},
+    {"id": "q06", "type": "lookup", "doc": "lm317", "page": 5, "question": "LM317 SOT-223 封裝中，ADJUST 是第幾腳？", "answer": "第 1 腳", "keywords": ["1"]},
+    {"id": "q07", "type": "caveat", "doc": "lm317", "page": 7, "question": "LM317 SOT-223 封裝的接面到環境熱阻（θJA）是多少？", "answer": "依晶片版本不同：舊版晶片（legacy chip）66.8 °C/W，新版晶片（new chip）59.6 °C/W", "keywords": ["66.8", "59.6"]},
+    {"id": "q08", "type": "caveat", "doc": "lm317", "page": 6, "question": "LM317 的 ESD 人體放電模式（HBM）耐受電壓是多少？", "answer": "依晶片版本不同：舊版晶片 ±2500 V，新版晶片 ±3000 V", "keywords": ["2500", "3000"]},
+    {"id": "q09", "type": "caveat", "doc": "lm317", "page": 8, "question": "LM317 的限流值是多少？", "answer": "依輸入輸出電壓差不同：電壓差 ≤ 15 V 時最小 1.5 A、典型 2.2 A；電壓差 = 40 V 且 TJ = 25 °C 時最小 0.15 A、典型 0.4 A", "keywords": ["1.5", "2.2", "0.15", "0.4"]},
+    {"id": "q10", "type": "caveat", "doc": "lm317", "page": 8, "question": "LM317 的最小負載電流是多少？", "answer": "在輸入輸出電壓差 = 40 V 的條件下，典型 3.5 mA、最大 10 mA", "keywords": ["3.5", "10"]},
+    {"id": "q11", "type": "caveat", "doc": "lm317", "page": 1, "question": "LM317 一定要接輸入電容嗎？", "answer": "通常不需要；只有元件距離輸入濾波電容超過 6 吋時，才需要加輸入旁路電容", "keywords": ["6"]},
+    {"id": "q12", "type": "calc", "doc": "lm317", "page": 1, "question": "LM317 的 R1 = 240 Ω、R2 = 2.4 kΩ 時，輸出電壓大約是多少？（忽略 ADJUST 腳電流）", "answer": "VOUT = 1.25 V × (1 + R2/R1) = 1.25 × 11 ≈ 13.75 V", "keywords": ["13.75"]},
+    {"id": "q13", "type": "lookup", "doc": "esp32", "page": 4, "question": "ESP32 晶片有幾個 GPIO？", "answer": "34 個", "keywords": ["34"]},
+    {"id": "q14", "type": "lookup", "doc": "esp32", "page": 4, "question": "ESP32 晶片的 12-bit SAR ADC 最多有幾個通道？", "answer": "最多 18 個通道", "keywords": ["18"]},
+    {"id": "q15", "type": "lookup", "doc": "esp32", "page": 30, "question": "ESP32 在 Hibernation 模式下的功耗是多少？", "answer": "5 µA（僅 RTC 定時器工作）", "keywords": ["5"]},
+    {"id": "q16", "type": "lookup", "doc": "esp32", "page": 30, "question": "ESP32 在 Light-sleep 模式下的功耗是多少？", "answer": "0.8 mA", "keywords": ["0.8"]},
+    {"id": "q17", "type": "caveat", "doc": "esp32", "page": 30, "question": "ESP32 在 Deep-sleep 模式下的功耗是多少？", "answer": "依工作內容不同：ULP 協處理器工作時 150 µA；超低功耗感測器監測方式 100 µA @1% duty；僅 RTC 定時器加 RTC 記憶體時 10 µA", "keywords": ["150", "100", "10"]},
+    {"id": "q18", "type": "caveat", "doc": "esp32", "page": 30, "question": "ESP32 的 CPU 最高頻率是多少？", "answer": "多數型號為 240 MHz；ESP32-S0WD（NRND）為 160 MHz", "keywords": ["240", "160"]},
+    {"id": "q19", "type": "caveat", "doc": "esp32", "page": 50, "question": "ESP32 晶片的工作溫度範圍是多少？", "answer": "多數型號 −40 °C 到 125 °C；ESP32-U4WDH 與 ESP32-D0WDRH2-V3 因內建 flash/PSRAM，最高為 105 °C", "keywords": ["125", "105"]},
+    {"id": "q20", "type": "caveat", "doc": "esp32", "page": 50, "question": "ESP32 晶片 VDD3P3 的建議輸入電壓最小值是多少？", "answer": "依型號不同：有封裝內 3.3 V flash/PSRAM 的晶片最小 3.0 V；無封裝內 flash/PSRAM 的晶片最小 2.3 V（典型 3.3 V、最大 3.6 V）", "keywords": ["3.0", "2.3"]},
+    {"id": "q21", "type": "lookup", "doc": "esp32", "page": 50, "question": "ESP32 晶片 IO 輸出總電流的絕對最大值是多少？", "answer": "1200 mA", "keywords": ["1200"]},
+    {"id": "q22", "type": "lookup", "doc": "wroom", "page": 2, "question": "ESP32-WROOM-32E 模組有幾個 GPIO？", "answer": "最多 26 個", "keywords": ["26"]},
+    {"id": "q23", "type": "confusion", "doc": "wroom", "page": 27, "question": "ESP32-WROOM-32E 模組的儲存溫度範圍是多少？", "answer": "−40 °C 到 105 °C（注意：ESP32 晶片本身是 −40 °C 到 150 °C，兩者不同）", "keywords": ["105"], "distractor": "150"},
+    {"id": "q24", "type": "confusion", "doc": "wroom", "page": 27, "question": "ESP32-WROOM-32E 模組的建議供電電壓範圍是多少？", "answer": "3.0 V 到 3.6 V，典型 3.3 V（注意：晶片部分型號最小可到 2.3 V，模組是 3.0 V）", "keywords": ["3.0", "3.6"], "distractor": "2.3"},
+    {"id": "q25", "type": "confusion", "doc": "wroom", "page": 3, "question": "ESP32-WROOM-32E 和 ESP32-WROOM-32UE 的模組尺寸各是多少？", "answer": "32E：18.0 × 25.5 × 3.1 mm；32UE：18.0 × 19.2 × 3.2 mm", "keywords": ["25.5", "19.2"]},
+    {"id": "q26", "type": "confusion", "doc": "wroom", "page": 2, "question": "內建 16 MB flash 的 ESP32-WROOM-32E 可以在 105 °C 環境下使用嗎？", "answer": "不行。只有內建 4/8 MB flash 的模組有 105 °C 版，內建 16 MB flash 的模組尚不支援 105 °C 版", "keywords": ["16", "4", "8"]},
+    {"id": "q27", "type": "lookup", "doc": "wroom", "page": 28, "question": "ESP32-WROOM-32E 以 802.11b、1 Mbps、19.5 dBm 發射時，平均和峰值電流各是多少？", "answer": "平均 239 mA，峰值 379 mA", "keywords": ["239", "379"]},
+    {"id": "q28", "type": "refuse", "doc": "lm317", "page": null, "question": "LM317 是否通過 AEC-Q100 車規認證？", "answer": "文件中找不到", "keywords": []},
+    {"id": "q29", "type": "refuse", "doc": "wroom", "page": null, "question": "ESP32-WROOM-32E 在台灣的 NCC 認證字號是多少？", "answer": "文件中找不到", "keywords": []},
+    {"id": "q30", "type": "refuse", "doc": "lm317", "page": null, "question": "LM317 的 MTBF（平均故障間隔時間）是多少？", "answer": "文件中找不到", "keywords": []}
+  ]
+}

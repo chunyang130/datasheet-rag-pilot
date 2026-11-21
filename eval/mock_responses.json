@@ -1,0 +1,12 @@
+{
+ "q15": [
+  "{\"answerable\": true, \"answer\": \"Hibernation 模式下功耗為 5 µA，僅 RTC 定時器處於工作狀態。\", \"citations\": [{\"id\": \"esp32#p30#2\", \"quote\": \"Hibernation 仅有RTC定时器处于工作状态 5µA\"}]}"
+ ],
+ "q07": [
+  "{\"answerable\": true, \"answer\": \"SOT-223 的 θJA 為 66.0 °C/W。\", \"citations\": [{\"id\": \"lm317#p7#1\", \"quote\": \"Junction-to-ambient thermal resistance 66.8 23.5 37.9 38.0 °C/W\"}]}",
+  "{\"answerable\": true, \"answer\": \"依晶片版本不同：舊版晶片（legacy chip）為 66.8 °C/W，新版晶片（new chip）為 59.6 °C/W。\", \"citations\": [{\"id\": \"lm317#p7#1\", \"quote\": \"Junction-to-ambient thermal resistance 66.8 23.5 37.9 38.0 °C/W\"}, {\"id\": \"lm317#p7#2\", \"quote\": \"Junction-to-ambient thermal resistance 59.6 41.0 °C/W\"}]}"
+ ],
+ "q28": [
+  "{\"answerable\": false, \"answer\": \"文件中找不到\", \"citations\": []}"
+ ]
+}
