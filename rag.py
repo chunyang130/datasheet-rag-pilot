@@ -62,7 +62,7 @@ NO_TEMPERATURE = set()   # 拒絕 temperature 參數的模型，第一次被拒�
 
 
 def call_claude(prompt, model):
-    payload = {"model": model, "max_tokens": 800,
+    payload = {"model": model, "max_tokens": 4000,   # 800 會截斷長答案（前導實驗第一輪的教訓）
                "messages": [{"role": "user", "content": prompt}]}
     if model not in NO_TEMPERATURE:
         payload["temperature"] = 0
@@ -77,6 +77,8 @@ def call_claude(prompt, model):
             return call_claude(prompt, model)
         raise RuntimeError(f"HTTP {e.code}：{body}") from None
     text = "".join(b.get("text", "") for b in data["content"])
+    if data.get("stop_reason") == "max_tokens":
+        raise RuntimeError("輸出被截斷（達到 max_tokens 上限）")
     u = data.get("usage", {})
     return text, u.get("input_tokens", 0), u.get("output_tokens", 0)
 
